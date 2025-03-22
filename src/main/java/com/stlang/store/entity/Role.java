@@ -1,0 +1,30 @@
+package com.stlang.store.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table (name = "Roles")
+public class Role {
+
+    @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @NotBlank(message = "Category's name not empty !")
+    @Column(columnDefinition = "NVARCHAR(200)")
+    private String name;
+
+    @OneToMany (mappedBy = "role")
+    private List<Authority> authorities;
+}
