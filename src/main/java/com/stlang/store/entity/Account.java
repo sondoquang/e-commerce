@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -18,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "Accounts")
-public class Account {
+public class Account  implements Serializable {
 
     @Id
     private String username;
@@ -32,7 +33,7 @@ public class Account {
     private List<Authority> authorities;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "order_id")
+    @OneToMany (mappedBy = "account")
     private List<Order> orders;
 
 }

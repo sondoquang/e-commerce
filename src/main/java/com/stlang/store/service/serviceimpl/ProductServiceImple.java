@@ -1,0 +1,58 @@
+package com.stlang.store.service.serviceimpl;
+
+import com.stlang.store.dao.CategoryDAO;
+import com.stlang.store.dao.ProductDAO;
+import com.stlang.store.entity.Category;
+import com.stlang.store.entity.Product;
+import com.stlang.store.exception.DataNotFoundException;
+import com.stlang.store.service.ProductService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ProductServiceImple implements ProductService {
+
+    private final ProductDAO productDAO;
+    private final CategoryDAO categoryDAO;
+
+    public ProductServiceImple(ProductDAO productDAO, CategoryDAO categoryDAO) {
+        this.productDAO = productDAO;
+        this.categoryDAO = categoryDAO;
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return productDAO.findAll();
+    }
+
+    @Override
+    public List<Product> findAll(Integer categoryId) {
+        Category category = categoryDAO.findById(categoryId).orElse(null);
+        if(category == null)
+            return productDAO.findAll();
+        return productDAO.findByCategory(category);
+    }
+
+    @Override
+    public Product findById(Integer id) {
+        return productDAO.findById(id).orElseThrow(() -> new DataNotFoundException("No product found with id: " + id));
+    }
+
+    @Override
+    public Product create(Product product) {
+        return productDAO.save(product);
+    }
+
+    @Override
+    public Product update(Product product) {
+        productDAO.findById(product.getId()).orElseThrow(() -> new DataNotFoundException("No product found with id: " + product.getId()));
+        return productDAO.save(product);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        findById(id);
+        productDAO.deleteById(id);
+    }
+}
