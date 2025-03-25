@@ -1,6 +1,6 @@
 package com.stlang.store.dao;
 
-import com.stlang.store.entity.Category;
+import com.stlang.store.domain.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

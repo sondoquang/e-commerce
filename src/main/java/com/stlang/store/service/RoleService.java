@@ -1,4 +1,16 @@
 package com.stlang.store.service;
 
-public class RoleService {
+import com.stlang.store.domain.Role;
+
+import java.util.List;
+
+public interface RoleService {
+
+    List<Role> findAll();
+    Role findById(Integer id);
+    Role findByName(String name);
+    Role create(String role);
+    Role update(Integer id, String role);
+    void delete(Integer id);
+
 }

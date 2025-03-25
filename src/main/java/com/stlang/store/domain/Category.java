@@ -1,4 +1,5 @@
-package com.stlang.store.entity;
+package com.stlang.store.domain;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -8,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -16,23 +16,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Orders")
-public class Order implements Serializable {
+@Table(name = "Categories")
+public class Category implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Temporal(TemporalType.DATE)
-    private Date date;
-
-    private String address;
-
-    @ManyToOne
-    @JoinColumn(name = "username")
-    private Account account;
+    private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "order")
-    private List<OrderDetail> orderDetails;
-
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }

@@ -1,7 +1,7 @@
 package com.stlang.store.service.serviceimpl;
 
 import com.stlang.store.dao.AccountDAO;
-import com.stlang.store.entity.Account;
+import com.stlang.store.domain.Account;
 import com.stlang.store.exception.DataExistingException;
 import com.stlang.store.exception.DataNotFoundException;
 import com.stlang.store.service.AccountService;

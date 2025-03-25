@@ -1,7 +1,7 @@
 package com.stlang.store.service.serviceimpl;
 
 import com.stlang.store.dao.CategoryDAO;
-import com.stlang.store.entity.Category;
+import com.stlang.store.domain.Category;
 import com.stlang.store.exception.DataExistingException;
 import com.stlang.store.exception.DataNotFoundException;
 import com.stlang.store.service.CategoryService;

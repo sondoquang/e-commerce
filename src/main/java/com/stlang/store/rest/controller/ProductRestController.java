@@ -1,10 +1,10 @@
 package com.stlang.store.rest.controller;
 
-import com.stlang.store.entity.Product;
+import com.stlang.store.dto.ProductDTO;
+import com.stlang.store.domain.Product;
 import com.stlang.store.exception.DataNotFoundException;
 import com.stlang.store.response.APIResponse;
 import com.stlang.store.service.ProductService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +25,10 @@ public class ProductRestController {
     }
 
     @GetMapping({"/products", "/products/category/{id}"})
-    public ResponseEntity<List<Product>> getProducts(@PathVariable Optional<Integer> id) {
+    public ResponseEntity<APIResponse> getProducts(@PathVariable Optional<Integer> id) {
         List<Product> products = id.isPresent() ? productService.findAll(id.get()): productService.findAll();
-        return products.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(products, HttpStatus.OK);
+        List<ProductDTO> productDTOS = productService.getConvertProductDTOs(products);
+        return ResponseEntity.ok(new APIResponse("success", productDTOS));
 
     }
 

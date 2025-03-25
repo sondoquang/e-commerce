@@ -1,10 +1,9 @@
 package com.stlang.store.rest.controller;
 
-import com.stlang.store.entity.Category;
+import com.stlang.store.domain.Category;
 import com.stlang.store.exception.DataNotFoundException;
 import com.stlang.store.response.APIResponse;
 import com.stlang.store.service.CategoryService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +25,9 @@ public class CategoryRestController {
 
 
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> getCategories() {
+    public ResponseEntity<APIResponse> getCategories() {
        List<Category> categories = categoryService.findAll();
-       return new ResponseEntity<>(categories, HttpStatus.OK);
+       return ResponseEntity.ok(new APIResponse("success", categories));
     }
 
     @GetMapping("/categories/{id}")

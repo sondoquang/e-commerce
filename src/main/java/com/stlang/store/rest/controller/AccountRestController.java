@@ -1,6 +1,6 @@
 package com.stlang.store.rest.controller;
 
-import com.stlang.store.entity.Account;
+import com.stlang.store.domain.Account;
 import com.stlang.store.exception.DataExistingException;
 import com.stlang.store.exception.DataNotFoundException;
 import com.stlang.store.response.APIResponse;

@@ -1,6 +1,6 @@
 package com.stlang.store.service;
 
-import com.stlang.store.entity.Category;
+import com.stlang.store.domain.Category;
 
 import java.util.List;
 

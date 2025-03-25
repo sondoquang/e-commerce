@@ -1,4 +1,4 @@
-package com.stlang.store.entity;
+package com.stlang.store.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

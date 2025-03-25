@@ -1,8 +1,7 @@
 package com.stlang.store.dao;
 
-import com.stlang.store.entity.Account;
+import com.stlang.store.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 

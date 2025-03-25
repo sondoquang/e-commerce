@@ -1,4 +1,4 @@
-package com.stlang.store.entity;
+package com.stlang.store.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;

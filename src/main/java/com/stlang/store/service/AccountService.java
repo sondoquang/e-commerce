@@ -1,6 +1,6 @@
 package com.stlang.store.service;
 
-import com.stlang.store.entity.Account;
+import com.stlang.store.domain.Account;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
