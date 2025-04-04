@@ -8,6 +8,9 @@ import com.stlang.store.domain.Product;
 import com.stlang.store.exception.DataNotFoundException;
 import com.stlang.store.service.ProductService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,11 +34,17 @@ public class ProductServiceImple implements ProductService {
     }
 
     @Override
-    public List<Product> findAll(Integer categoryId) {
+    public Page<Product> findAll(Integer categoryId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+
+        if(categoryId == null){
+            return productDAO.findAll(pageable);
+        }
         Category category = categoryDAO.findById(categoryId).orElse(null);
-        if(category == null)
-            return productDAO.findAll();
-        return productDAO.findByCategory(category);
+        if(category == null){
+            return productDAO.findAll(pageable);
+        }
+        return productDAO.findByCategory(category, pageable);
     }
 
     @Override

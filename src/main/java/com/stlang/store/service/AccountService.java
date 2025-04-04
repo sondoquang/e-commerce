@@ -15,5 +15,4 @@ public interface AccountService {
     Account updateAccount(Account account);
     void deleteAccount(String username);
     Account findByEmail(String email);
-
 }

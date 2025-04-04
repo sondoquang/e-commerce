@@ -1,14 +1,13 @@
-package com.stlang.store.rest.controller;
+package com.stlang.store.controller;
 
-import com.stlang.store.dto.ProductDTO;
 import com.stlang.store.domain.Product;
 import com.stlang.store.exception.DataNotFoundException;
 import com.stlang.store.response.APIResponse;
 import com.stlang.store.service.ProductService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -25,11 +24,13 @@ public class ProductRestController {
     }
 
     @GetMapping({"/products", "/products/category/{id}"})
-    public ResponseEntity<APIResponse> getProducts(@PathVariable Optional<Integer> id) {
-        List<Product> products = id.isPresent() ? productService.findAll(id.get()): productService.findAll();
-        List<ProductDTO> productDTOS = productService.getConvertProductDTOs(products);
-        return ResponseEntity.ok(new APIResponse("success", productDTOS));
-
+    public ResponseEntity<APIResponse> getProducts(
+            @PathVariable Optional<Integer> id,
+            @RequestParam("page") Optional<Integer> pageNumber
+                                                   ) {
+        int pageNo = pageNumber.orElse(1);
+        Page<Product> products = productService.findAll(id.orElse(null),pageNo,6);
+        return ResponseEntity.ok(new APIResponse("success", products));
     }
 
     @GetMapping("/products/{id}")

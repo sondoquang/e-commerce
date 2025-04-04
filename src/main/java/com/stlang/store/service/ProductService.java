@@ -2,12 +2,13 @@ package com.stlang.store.service;
 
 import com.stlang.store.dto.ProductDTO;
 import com.stlang.store.domain.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ProductService {
     List<Product> findAll();
-    List<Product> findAll(Integer category);
+    Page<Product> findAll(Integer category, int pageNo, int pageSize);
     Product findById(Integer id);
     Product create(Product product);
     Product update(Product product);

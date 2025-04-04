@@ -1,4 +1,4 @@
-package com.stlang.store.rest.controller;
+package com.stlang.store.controller;
 
 import com.stlang.store.domain.Category;
 import com.stlang.store.exception.DataNotFoundException;
