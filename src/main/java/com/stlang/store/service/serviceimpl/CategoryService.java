@@ -4,17 +4,16 @@ import com.stlang.store.dao.CategoryDAO;
 import com.stlang.store.domain.Category;
 import com.stlang.store.exception.DataExistingException;
 import com.stlang.store.exception.DataNotFoundException;
-import com.stlang.store.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CategoryServiceImple implements CategoryService {
+public class CategoryService implements com.stlang.store.service.ICategoryService {
 
     private final CategoryDAO categoryDAO;
 
-    public CategoryServiceImple(CategoryDAO categoryDAO) {
+    public CategoryService(CategoryDAO categoryDAO) {
         this.categoryDAO = categoryDAO;
     }
 

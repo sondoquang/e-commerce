@@ -4,7 +4,8 @@ import com.stlang.store.domain.Account;
 import com.stlang.store.exception.DataExistingException;
 import com.stlang.store.exception.DataNotFoundException;
 import com.stlang.store.response.APIResponse;
-import com.stlang.store.service.AccountService;
+import com.stlang.store.service.IAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +16,10 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
-public class AccountRestController {
+public class AccountController {
 
-    private final AccountService accountService;
-
-    public AccountRestController(AccountService accountService) {
-        this.accountService = accountService;
-    }
+    @Autowired
+    private IAccountService accountService;
 
     @GetMapping("/api/v01/accounts")
     public ResponseEntity<List<Account>> getAccounts() {
@@ -29,10 +27,11 @@ public class AccountRestController {
         return accounts.isEmpty() ? new ResponseEntity<>(NOT_FOUND) : new ResponseEntity<>(accounts, HttpStatus.OK);
     }
 
+
     @GetMapping("/api/v01/accounts/{username}")
     public ResponseEntity<Account> getAccount(@PathVariable String username) {
         Account account = accountService.findById(username);
-        return account == null ? new ResponseEntity<>(NOT_FOUND) : new ResponseEntity<>(account, HttpStatus.OK);
+        return ResponseEntity.ok(account);
     }
 
     @PostMapping("/api/v01/accounts")

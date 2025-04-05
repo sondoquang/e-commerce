@@ -1,5 +1,6 @@
 package com.stlang.store.config;
 
+import com.stlang.store.service.serviceimpl.MyUserDetailService;
 import com.stlang.store.service.jwt.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+
+
 @Service
 public class JWTFilter extends OncePerRequestFilter {
 
@@ -36,7 +39,7 @@ public class JWTFilter extends OncePerRequestFilter {
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = context.getBean(com.stlang.spring_sec_demo.service.MyUserDetailService.class).loadUserByUsername(username);
+            UserDetails userDetails = context.getBean(MyUserDetailService.class).loadUserByUsername(username);
 
             if(jwtService.validateToken(token, userDetails)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

@@ -4,17 +4,16 @@ import com.stlang.store.dao.RoleDAO;
 import com.stlang.store.domain.Role;
 import com.stlang.store.exception.DataExistingException;
 import com.stlang.store.exception.DataNotFoundException;
-import com.stlang.store.service.RoleService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RoleServiceImple implements RoleService {
+public class RoleService implements com.stlang.store.service.IRoleService {
 
     private final RoleDAO roleDAO;
 
-    public RoleServiceImple(RoleDAO roleDAO) {
+    public RoleService(RoleDAO roleDAO) {
         this.roleDAO = roleDAO;
     }
 

@@ -3,17 +3,16 @@ package com.stlang.store.service.serviceimpl;
 import com.stlang.store.dao.AuthorityDAO;
 import com.stlang.store.domain.Authority;
 import com.stlang.store.exception.DataNotFoundException;
-import com.stlang.store.service.AuthorityService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class AuthorityServiceImple implements AuthorityService {
+public class AuthorityService implements com.stlang.store.service.IAuthorityService {
 
     private final AuthorityDAO authorityDAO;
 
-    public AuthorityServiceImple(AuthorityDAO authorityDAO) {
+    public AuthorityService(AuthorityDAO authorityDAO) {
         this.authorityDAO = authorityDAO;
     }
 

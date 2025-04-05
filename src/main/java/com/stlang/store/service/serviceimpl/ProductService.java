@@ -6,7 +6,6 @@ import com.stlang.store.dto.ProductDTO;
 import com.stlang.store.domain.Category;
 import com.stlang.store.domain.Product;
 import com.stlang.store.exception.DataNotFoundException;
-import com.stlang.store.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,13 +15,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductServiceImple implements ProductService {
+public class ProductService implements com.stlang.store.service.IProductService {
 
     private final ProductDAO productDAO;
     private final CategoryDAO categoryDAO;
     private final ModelMapper modelMapper;
 
-    public ProductServiceImple(ProductDAO productDAO, CategoryDAO categoryDAO, ModelMapper modelMapper) {
+    public ProductService(ProductDAO productDAO, CategoryDAO categoryDAO, ModelMapper modelMapper) {
         this.productDAO = productDAO;
         this.categoryDAO = categoryDAO;
         this.modelMapper = modelMapper;

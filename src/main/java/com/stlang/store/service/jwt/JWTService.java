@@ -1,10 +1,12 @@
 package com.stlang.store.service.jwt;
 
+import com.stlang.store.dto.LoginDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ import java.util.function.Function;
 
 @Service
 public class JWTService {
+
+
 
 //    private static final String SECRET = "TmV3U2VjcmV0S2V5Rm9ySldUU2LnbmLuZ1B1cnBvc2VzMTIzNDU2Nzg=\\r\\n\";";
 
@@ -48,9 +52,24 @@ public class JWTService {
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60))
                 .signWith(getKey(), SignatureAlgorithm.HS256).compact();
     }
+
+    public String generateRefreshToken(String email, LoginDTO loginDTO) {
+        Map<String, Object> claims= new HashMap<>();
+        claims.put("email", loginDTO.getUserLogin().getEmail());
+        claims.put("fullname", loginDTO.getUserLogin().getFullName());
+        claims.put("gender", loginDTO.getUserLogin().getGender());
+        claims.put("username", loginDTO.getUserLogin().getUsername());
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(email)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60*24*100))
+                .signWith(getKey(), SignatureAlgorithm.HS256).compact();
+    }
+
 
     private Key getKey() {
         byte[] keyByte = Decoders.BASE64.decode(secretKey);

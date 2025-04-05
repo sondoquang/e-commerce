@@ -4,21 +4,23 @@ import com.stlang.store.dao.AccountDAO;
 import com.stlang.store.domain.Account;
 import com.stlang.store.exception.DataExistingException;
 import com.stlang.store.exception.DataNotFoundException;
-import com.stlang.store.service.AccountService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import com.stlang.store.service.IAccountService;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountService implements IAccountService {
 
     private final AccountDAO accountDAO;
 
-    public AccountServiceImpl(AccountDAO accountDAO) {
+    public AccountService(AccountDAO accountDAO) {
         this.accountDAO = accountDAO;
     }
 
@@ -40,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findById(String username) {
-        return accountDAO.findById(username).orElse(null);
+        return accountDAO.findById(username).orElseThrow(() -> new DataNotFoundException("Account not found"));
     }
 
     @Override
@@ -68,4 +70,13 @@ public class AccountServiceImpl implements AccountService {
     public Account findByEmail(String email) {
         return accountDAO.findByEmail(email).orElseThrow(() -> new DataNotFoundException("Account Not Found with email: " + email));
     }
+
+    @Override
+    public void updateToken(String username, String token) {
+        Account account = findById(username);
+        account.setRefreshToken(token);
+        accountDAO.save(account);
+    }
+
+
 }

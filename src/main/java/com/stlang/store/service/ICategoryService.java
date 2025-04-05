@@ -4,7 +4,7 @@ import com.stlang.store.domain.Category;
 
 import java.util.List;
 
-public interface CategoryService {
+public interface ICategoryService {
 
     List<Category> findAll();
     Category findById(Integer id);

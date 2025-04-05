@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
-public interface AccountService {
+public interface IAccountService {
 
     Page<Account> findAll(int pageNumber, int pageSize, Sort... sort);
     List<Account> findAll();
@@ -15,4 +15,6 @@ public interface AccountService {
     Account updateAccount(Account account);
     void deleteAccount(String username);
     Account findByEmail(String email);
+
+    void updateToken(String username, String token);
 }

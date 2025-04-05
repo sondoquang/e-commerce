@@ -1,14 +1,9 @@
 package com.stlang.store.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,16 +12,27 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "Accounts")
 public class Account  implements Serializable {
 
     @Id
     private String username;
+    @NotNull(message = "Password is not null !")
     private String password;
+    @Column(columnDefinition = "NVARCHAR(200)", nullable = true)
     private String fullname;
+    @Column(columnDefinition = "NVARCHAR(200)", nullable = true)
     private String email;
+    @Column(columnDefinition = "NVARCHAR(200)", nullable = true)
     private String photo;
+
+    @Builder.Default
+    private Boolean gender = true;
+
+    @Column(columnDefinition = "NVARCHAR(1000)",name = "refresh_token")
+    private String refreshToken;
 
     @JsonIgnore
     @OneToMany (mappedBy = "account")

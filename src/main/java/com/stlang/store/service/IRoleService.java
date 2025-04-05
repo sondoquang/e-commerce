@@ -4,7 +4,7 @@ import com.stlang.store.domain.Role;
 
 import java.util.List;
 
-public interface RoleService {
+public interface IRoleService {
 
     List<Role> findAll();
     Role findById(Integer id);

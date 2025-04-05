@@ -1,7 +1,7 @@
-package com.stlang.spring_sec_demo.service;
+package com.stlang.store.service.serviceimpl;
 
 import com.stlang.store.domain.Account;
-import com.stlang.store.service.AccountService;
+import com.stlang.store.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

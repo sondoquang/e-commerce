@@ -4,7 +4,7 @@ import com.stlang.store.domain.Authority;
 
 import java.util.List;
 
-public interface AuthorityService {
+public interface IAuthorityService {
 
     List<Authority> findAll();
     Authority findById(Integer id);
