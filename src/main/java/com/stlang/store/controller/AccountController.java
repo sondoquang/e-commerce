@@ -3,7 +3,6 @@ package com.stlang.store.controller;
 import com.stlang.store.domain.Account;
 import com.stlang.store.exception.DataExistingException;
 import com.stlang.store.exception.DataNotFoundException;
-import com.stlang.store.response.APIResponse;
 import com.stlang.store.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 public class AccountController {
@@ -35,35 +33,35 @@ public class AccountController {
     }
 
     @PostMapping("/api/v01/accounts")
-    public ResponseEntity<APIResponse> createAccount(@RequestBody Account account) {
+    public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         Account createAccount = null;
         try {
             createAccount = accountService.createAccount(account);
-            return ResponseEntity.ok(new APIResponse("Success", createAccount));
+            return ResponseEntity.status(OK).body(createAccount);
         } catch (DataExistingException e) {
-            return ResponseEntity.status(BAD_REQUEST).body(new APIResponse(e.getMessage(), null ));
+            return ResponseEntity.status(BAD_REQUEST).body(null);
         }
     }
 
     @PutMapping("/api/v01/accounts/{username}")
-    public ResponseEntity<APIResponse> updateAccount(@PathVariable String username, @RequestBody Account account) {
+    public ResponseEntity<Account> updateAccount(@PathVariable String username, @RequestBody Account account) {
         try {
             Account saveAccount = accountService.updateAccount(account);
-            return ResponseEntity.ok(new APIResponse("Success", saveAccount));
+            return ResponseEntity.status(OK).body(saveAccount);
         } catch (DataExistingException e) {
-            return ResponseEntity.status(BAD_REQUEST).body(new APIResponse(e.getMessage(), null ));
+            return ResponseEntity.status(BAD_REQUEST).body(null);
         }
 
 
     }
 
     @DeleteMapping("/api/v01/accounts/{username}")
-    public ResponseEntity<APIResponse> deleteAccount(@PathVariable String username) {
+    public ResponseEntity<Void> deleteAccount(@PathVariable String username) {
         try {
             accountService.deleteAccount(username);
-            return ResponseEntity.ok(new APIResponse("Delete user success.", null));
+            return ResponseEntity.status(NO_CONTENT).build();
         } catch (DataNotFoundException e) {
-            return ResponseEntity.status(BAD_REQUEST).body(new APIResponse(e.getMessage(), null ));
+            return ResponseEntity.status(BAD_REQUEST).body(null);
         }
     }
 

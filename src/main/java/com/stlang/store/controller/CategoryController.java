@@ -2,15 +2,13 @@ package com.stlang.store.controller;
 
 import com.stlang.store.domain.Category;
 import com.stlang.store.exception.DataNotFoundException;
-import com.stlang.store.response.APIResponse;
 import com.stlang.store.service.ICategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @CrossOrigin("*")
@@ -25,48 +23,48 @@ public class CategoryController {
 
 
     @GetMapping("/categories")
-    public ResponseEntity<APIResponse> getCategories() {
+    public ResponseEntity<List<Category>> getCategories() {
        List<Category> categories = ICategoryService.findAll();
-       return ResponseEntity.ok(new APIResponse("success", categories));
+       return ResponseEntity.status(OK).body(categories);
     }
 
     @GetMapping("/categories/{id}")
-    public ResponseEntity<APIResponse> getCategory(@PathVariable int id) {
+    public ResponseEntity<Category> getCategory(@PathVariable int id) {
         try {
             Category category = ICategoryService.findById(id);
-            return ResponseEntity.ok(new APIResponse("Success", category));
+            return ResponseEntity.status(OK).body(category);
         } catch (DataNotFoundException e) {
-            return ResponseEntity.status(BAD_REQUEST).body(new APIResponse(e.getMessage(), null));
+            return ResponseEntity.status(BAD_REQUEST).body(null);
         }
     }
 
     @PostMapping("/categories")
-    public ResponseEntity<APIResponse> addCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
         try {
             ICategoryService.create(category);
-            return ResponseEntity.ok(new APIResponse("Create success", category));
+            return ResponseEntity.status(CREATED).body(category);
         } catch (DataNotFoundException e) {
-            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new APIResponse(e.getMessage(), null));
+            return ResponseEntity.status(BAD_REQUEST).body(null);
         }
     }
 
     @PutMapping("/categories/{id}")
-    public ResponseEntity<APIResponse> updateCategory(@PathVariable int id, @RequestBody String category) {
+    public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody String category) {
         try {
-            ICategoryService.update(category, id);
-            return ResponseEntity.ok(new APIResponse("Update success", category));
+            Category updateCategory =  ICategoryService.update(category, id);
+            return ResponseEntity.status(OK).body(updateCategory);
         } catch (DataNotFoundException e) {
-            return ResponseEntity.status(BAD_REQUEST).body(new APIResponse(e.getMessage(), null));
+            return ResponseEntity.status(BAD_REQUEST).body(null);
         }
     }
 
     @DeleteMapping("/categories/{id}")
-    public ResponseEntity<APIResponse> deleteCategory(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable Integer id) {
         try {
             ICategoryService.delete(id);
-            return ResponseEntity.ok(new APIResponse("Delete category success", null));
+            return ResponseEntity.status(NO_CONTENT).build();
         } catch (Exception e) {
-            return ResponseEntity.status(BAD_REQUEST).body(new APIResponse(e.getMessage(), null));
+            return ResponseEntity.status(BAD_REQUEST).body(null);
         }
     }
 

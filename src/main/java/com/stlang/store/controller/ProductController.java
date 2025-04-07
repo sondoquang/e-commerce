@@ -2,7 +2,6 @@ package com.stlang.store.controller;
 
 import com.stlang.store.domain.Product;
 import com.stlang.store.exception.DataNotFoundException;
-import com.stlang.store.response.APIResponse;
 import com.stlang.store.service.IProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @CrossOrigin("*")
@@ -24,22 +24,22 @@ public class ProductController {
     }
 
     @GetMapping({"/products", "/products/category/{id}"})
-    public ResponseEntity<APIResponse> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             @PathVariable Optional<Integer> id,
             @RequestParam("page") Optional<Integer> pageNumber
                                                    ) {
         int pageNo = pageNumber.orElse(1);
         Page<Product> products = IProductService.findAll(id.orElse(null),pageNo,6);
-        return ResponseEntity.ok(new APIResponse("success", products));
+        return ResponseEntity.status(OK).body(products);
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<APIResponse> getProduct(@PathVariable int id) {
+    public ResponseEntity<Product> getProduct(@PathVariable int id) {
         try {
             Product product = IProductService.findById(id);
-            return ResponseEntity.ok(new APIResponse("Success", product));
+            return ResponseEntity.status(OK).body(product);
         } catch (DataNotFoundException e) {
-            return ResponseEntity.status(BAD_REQUEST).body(new APIResponse(e.getMessage(), null));
+            return ResponseEntity.status(BAD_REQUEST).body(null);
         }
     }
 }

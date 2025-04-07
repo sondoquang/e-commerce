@@ -61,7 +61,8 @@ public class SecurityConfiguration {
                                 String.format("%s/register", apiPrefix),
                                 String.format("%s/products/**", apiPrefix),
                                 String.format("%s/categories/**", apiPrefix),
-                                String.format("%s/getAccount", apiPrefix)
+                                String.format("%s/getAccount", apiPrefix),
+                                String.format("%s/files/**", apiPrefix)
                         ).permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.disable())
